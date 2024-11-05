@@ -45,6 +45,12 @@ class TaskTest {
             assertEquals(taskId, task.getId());
             assertEquals(createdAt, task.getCreateAt());
         }
+
+        @Test
+        void shouldDefaultToCurrentDateIfCreateAtIsNull() {
+            Task task = Task.createTask(taskId, taskDescription, null);
+            assertEquals(createdAt, task.getCreateAt());
+        }
     }
 
     @Nested

@@ -13,6 +13,9 @@ public class Task {
         if (taskDescription == null || taskDescription.isBlank()) {
             throw new IllegalArgumentException("Task description cannot be empty");
         }
+        if (createdAt == null) {
+            createdAt = LocalDate.now();
+        }
         return new Task(taskId, taskDescription, createdAt);
     }
 
