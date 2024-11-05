@@ -9,10 +9,14 @@ public class Task {
     private LocalDate createAt;
     private LocalDate updatedAt;
 
-    public Task(int taskId, String taskDescription, LocalDate createdAt) {
+    public static Task createTask(int taskId, String taskDescription, LocalDate createdAt) {
         if (taskDescription == null || taskDescription.isBlank()) {
             throw new IllegalArgumentException("Task description cannot be empty");
         }
+        return new Task(taskId, taskDescription, createdAt);
+    }
+
+    private Task(int taskId, String taskDescription, LocalDate createdAt) {
         this.id = taskId;
         this.description = taskDescription;
         this.createAt = createdAt;

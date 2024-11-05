@@ -22,26 +22,26 @@ class TaskTest {
 
         @Test
         void shouldCreateNewTaskWithId() {
-            Task task = new Task(taskId, taskDescription, createdAt);
+            Task task = Task.createTask(taskId, taskDescription, createdAt);
             assertNotNull(task);
             assertEquals(taskId, task.getId());
         }
 
         @Test
         void shouldCreateTaskWithDescription() {
-            Task task = new Task(taskId, taskDescription, createdAt);
+            Task task = Task.createTask(taskId, taskDescription, createdAt);
             assertEquals(taskDescription, task.getDescription());
         }
 
         @Test
         void shouldCreateTaskInTodoStatus() {
-            Task task = new Task(taskId, taskDescription, createdAt);
+            Task task = Task.createTask(taskId, taskDescription, createdAt);
             assertEquals(TaskStatus.TODO, task.getStatus());
         }
 
         @Test
         void shouldCreateTaskWithCurrentDate() {
-            Task task = new Task(taskId, taskDescription, createdAt);
+            Task task = Task.createTask(taskId, taskDescription, createdAt);
             assertEquals(taskId, task.getId());
             assertEquals(createdAt, task.getCreateAt());
         }
@@ -52,7 +52,7 @@ class TaskTest {
         @Test
         void shouldUpdateTheUpdateAtProperty() {
             LocalDate createdAt = LocalDate.of(2024,11,1);
-            Task task = new Task(taskId, taskDescription, createdAt);
+            Task task = Task.createTask(taskId, taskDescription, createdAt);
             task.update();
             assertEquals(task.getUpdateAt(), LocalDate.now());
         }
@@ -66,7 +66,8 @@ class TaskTest {
         @ValueSource(strings = {"", "   "})
         void shouldNotAllowTaskWithoutDescription(String desc) {
             IllegalArgumentException exception =
-                assertThrows(IllegalArgumentException.class, () -> new Task(0, desc, LocalDate.now()));
+                assertThrows(IllegalArgumentException.class,
+                    () -> Task.createTask(0, desc, LocalDate.now()));
 
             assertEquals("Task description cannot be empty", exception.getMessage());
         }
