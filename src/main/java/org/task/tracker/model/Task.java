@@ -5,8 +5,8 @@ import java.time.LocalDate;
 public class Task {
 
     private final int id;
+    private final LocalDate createAt;
     private String description;
-    private LocalDate createAt;
     private LocalDate updatedAt;
     private TaskStatus taskStatus;
 
@@ -29,11 +29,11 @@ public class Task {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public TaskStatus getStatus() {
@@ -41,12 +41,11 @@ public class Task {
     }
 
     public LocalDate getCreateAt() {
-
-        return createAt;
+        return this.createAt;
     }
 
     public LocalDate getUpdateAt() {
-        return updatedAt;
+        return this.updatedAt;
     }
 
     public void moveInProgress() {
