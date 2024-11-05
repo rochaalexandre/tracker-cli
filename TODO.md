@@ -1,0 +1,24 @@
+## TODO
+
+- [ ] Add, Update, and Delete tasks
+    - [ ] add $task_name
+    - [ ] update $id $task_new_name
+    - [ ] delete $id
+    - [ ] list ( list all)
+        - [ ] list done
+        - [ ] list todo
+        - [ ] list in-progress
+- [ ] Task Properties:
+    - ~~id: A unique identifier for the task~~
+    - ~~description: A short description of the task~~
+    - status: The status of the task (todo, in-progress, done)
+    - ~~createdAt: The date and time when the task was created~~
+    - ~~updatedAt: The date and time when the task was last updated~~
+- [ ] Mark a task as in progress or done
+- [ ] List all tasks
+- [ ] List all tasks that are done
+- [ ] List all tasks that are not done
+- [ ] List all tasks that are in progress
+- [ ] Use a JSON file to store the tasks in the current directory.
+    - The JSON file should be created if it does not exist.
+- [ ] Use positional arguments in command line to accept user inputs.
