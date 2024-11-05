@@ -59,5 +59,10 @@ public class Task {
         this.updatedAt = LocalDate.now();
         return TaskStatus.DONE;
     }
+
+    public String updateDescription(String newDescription) {
+        this.description = newDescription;
+        return this.description;
+    }
 }
 

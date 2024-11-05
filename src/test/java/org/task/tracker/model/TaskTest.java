@@ -1,6 +1,7 @@
 package org.task.tracker.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -50,6 +51,18 @@ class TaskTest {
         void shouldDefaultToCurrentDateIfCreateAtIsNull() {
             Task task = Task.create(taskId, taskDescription, null);
             assertEquals(createdAt, task.getCreateAt());
+        }
+
+
+        @Test
+        void shouldUpdateTaskDescription() {
+            Task task = Task.create(taskId, taskDescription, createdAt);
+            String newDescription = "My new description";
+            String description = task.updateDescription(newDescription);
+
+            assertEquals(newDescription, description);
+            assertEquals(newDescription, task.getDescription());
+            assertNotEquals(taskDescription, task.getDescription());
         }
 
     }
