@@ -75,6 +75,12 @@ class TaskTest {
             task.moveInProgress();
             assertEquals(TaskStatus.PROGRESS, task.getStatus());
         }
+
+        @Test
+        void shouldChangeTaskStatusToDone() {
+            task.markTaskAsDone();
+            assertEquals(TaskStatus.DONE, task.getStatus());
+        }
     }
 
     @Nested

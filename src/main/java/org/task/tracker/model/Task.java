@@ -52,5 +52,10 @@ public class Task {
         this.taskStatus = TaskStatus.PROGRESS;
         this.updatedAt = LocalDate.now();
     }
+
+    public void markTaskAsDone() {
+        this.taskStatus = TaskStatus.DONE;
+        this.updatedAt = LocalDate.now();
+    }
 }
 
