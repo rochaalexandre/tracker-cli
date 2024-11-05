@@ -21,28 +21,31 @@ class TaskTest {
     @Nested
     class WhenUsingValidValues {
 
+        private Task task;
+
+        @BeforeEach
+        void setUp() {
+            task = Task.create(taskId, taskDescription, createdAt);
+        }
+
         @Test
         void shouldCreateNewTaskWithId() {
-            Task task = Task.create(taskId, taskDescription, createdAt);
             assertNotNull(task);
             assertEquals(taskId, task.getId());
         }
 
         @Test
         void shouldCreateTaskWithDescription() {
-            Task task = Task.create(taskId, taskDescription, createdAt);
             assertEquals(taskDescription, task.getDescription());
         }
 
         @Test
         void shouldCreateTaskInTodoStatus() {
-            Task task = Task.create(taskId, taskDescription, createdAt);
             assertEquals(TaskStatus.TODO, task.getStatus());
         }
 
         @Test
         void shouldCreateTaskWithCurrentDate() {
-            Task task = Task.create(taskId, taskDescription, createdAt);
             assertEquals(taskId, task.getId());
             assertEquals(createdAt, task.getCreateAt());
         }
@@ -56,7 +59,6 @@ class TaskTest {
 
         @Test
         void shouldUpdateTaskDescription() {
-            Task task = Task.create(taskId, taskDescription, createdAt);
             String newDescription = "My new description";
             String description = task.updateDescription(newDescription);
 
@@ -109,7 +111,19 @@ class TaskTest {
                 assertThrows(IllegalArgumentException.class,
                     () -> Task.create(0, desc, LocalDate.now()));
 
-            assertEquals("Task description cannot be empty", exception.getMessage());
+            assertEquals(Task.TASK_DESCRIPTION_CANNOT_BE_EMPTY, exception.getMessage());
+        }
+
+        @ParameterizedTest
+        @NullAndEmptySource
+        @ValueSource(strings = {"", "   "})
+        void shouldNotAllowUpdateTaskDescriptionWithInvalidValues(String desc) {
+            Task task = Task.create(taskId, taskDescription, createdAt);
+            IllegalArgumentException exception =
+                assertThrows(IllegalArgumentException.class,
+                    () -> task.updateDescription(desc));
+
+            assertEquals(Task.TASK_DESCRIPTION_CANNOT_BE_EMPTY, exception.getMessage());
         }
     }
 }

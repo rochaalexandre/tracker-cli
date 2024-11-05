@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public class Task {
 
+    public static final String TASK_DESCRIPTION_CANNOT_BE_EMPTY =
+        "Task description cannot be empty";
     private final int id;
     private final LocalDate createAt;
     private String description;
@@ -12,7 +14,7 @@ public class Task {
 
     public static Task create(int taskId, String taskDescription, LocalDate createdAt) {
         if (taskDescription == null || taskDescription.isBlank()) {
-            throw new IllegalArgumentException("Task description cannot be empty");
+            throw new IllegalArgumentException(TASK_DESCRIPTION_CANNOT_BE_EMPTY);
         }
         if (createdAt == null) {
             createdAt = LocalDate.now();
@@ -60,8 +62,12 @@ public class Task {
         return TaskStatus.DONE;
     }
 
-    public String updateDescription(String newDescription) {
-        this.description = newDescription;
+    public String updateDescription(String taskDescription) {
+        if (taskDescription == null || taskDescription.isBlank()) {
+            throw new IllegalArgumentException(TASK_DESCRIPTION_CANNOT_BE_EMPTY);
+        }
+
+        this.description = taskDescription;
         return this.description;
     }
 }
