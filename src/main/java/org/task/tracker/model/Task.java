@@ -50,7 +50,7 @@ public class Task {
         return this.updatedAt;
     }
 
-    public TaskStatus moveInProgress() {
+    public TaskStatus markInProgress() {
         this.taskStatus = TaskStatus.PROGRESS;
         this.updatedAt = LocalDate.now();
         return TaskStatus.PROGRESS;

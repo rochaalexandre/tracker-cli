@@ -81,13 +81,13 @@ class TaskTest {
 
         @Test
         void shouldUpdateTheUpdateAtProperty() {
-            task.moveInProgress();
+            task.markInProgress();
             assertEquals(LocalDate.now(), task.getUpdateAt());
         }
 
         @Test
         void shouldChangeTaskStatusToInProgress() {
-            TaskStatus taskStatus = task.moveInProgress();
+            TaskStatus taskStatus = task.markInProgress();
             assertEquals(TaskStatus.PROGRESS, task.getStatus());
             assertEquals(taskStatus, task.getStatus());
         }
