@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -51,7 +50,6 @@ class TaskTest {
     @Nested
     class WhenUpdatingTask {
         @Test
-        @Disabled
         void shouldUpdateTheUpdateAtProperty() {
             LocalDate createdAt = LocalDate.of(2024,11,1);
             Task task = new Task(taskId, taskDescription, createdAt);

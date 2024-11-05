@@ -41,7 +41,7 @@ public class Task {
     }
 
     public void update() {
-        return;
+        this.updatedAt = LocalDate.now();
     }
 }
 
