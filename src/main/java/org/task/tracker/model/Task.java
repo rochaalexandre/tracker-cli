@@ -10,7 +10,7 @@ public class Task {
     private LocalDate updatedAt;
     private TaskStatus taskStatus;
 
-    public static Task createTask(int taskId, String taskDescription, LocalDate createdAt) {
+    public static Task create(int taskId, String taskDescription, LocalDate createdAt) {
         if (taskDescription == null || taskDescription.isBlank()) {
             throw new IllegalArgumentException("Task description cannot be empty");
         }
