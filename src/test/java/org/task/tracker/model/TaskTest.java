@@ -52,7 +52,6 @@ class TaskTest {
         @Test
         void shouldUpdateTheUpdateAtProperty() {
             task.update();
-
             assertEquals(task.getUpdateAt(), LocalDate.now());
         }
     }
@@ -70,6 +69,4 @@ class TaskTest {
             assertEquals("Task description cannot be empty", exception.getMessage());
         }
     }
-
-
 }
