@@ -7,8 +7,8 @@ public class Task {
     private final int id;
     private final LocalDate createAt;
     private String description;
-    private LocalDate updatedAt;
     private TaskStatus taskStatus;
+    private LocalDate updatedAt;
 
     public static Task create(int taskId, String taskDescription, LocalDate createdAt) {
         if (taskDescription == null || taskDescription.isBlank()) {

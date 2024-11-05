@@ -7,6 +7,7 @@
     - ~~createdAt: The date and time when the task was created~~
     - ~~updatedAt: The date and time when the task was last updated~~
     - ~~Mark a task as in progress or done~~
+  - Update task description
 - [ ] Add, Update, and Delete tasks
     - [ ] add $task_name
     - [ ] update $id $task_new_name
