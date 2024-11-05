@@ -48,14 +48,16 @@ public class Task {
         return this.updatedAt;
     }
 
-    public void moveInProgress() {
+    public TaskStatus moveInProgress() {
         this.taskStatus = TaskStatus.PROGRESS;
         this.updatedAt = LocalDate.now();
+        return TaskStatus.PROGRESS;
     }
 
-    public void markTaskAsDone() {
+    public TaskStatus markTaskAsDone() {
         this.taskStatus = TaskStatus.DONE;
         this.updatedAt = LocalDate.now();
+        return TaskStatus.DONE;
     }
 }
 

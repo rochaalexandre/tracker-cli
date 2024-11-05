@@ -72,14 +72,16 @@ class TaskTest {
 
         @Test
         void shouldChangeTaskStatusToInProgress() {
-            task.moveInProgress();
+            TaskStatus taskStatus = task.moveInProgress();
             assertEquals(TaskStatus.PROGRESS, task.getStatus());
+            assertEquals(taskStatus, task.getStatus());
         }
 
         @Test
         void shouldChangeTaskStatusToDone() {
-            task.markTaskAsDone();
+            TaskStatus taskStatus = task.markTaskAsDone();
             assertEquals(TaskStatus.DONE, task.getStatus());
+            assertEquals(taskStatus, task.getStatus());
         }
     }
 
