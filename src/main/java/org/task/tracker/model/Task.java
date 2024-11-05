@@ -8,6 +8,7 @@ public class Task {
     private String description;
     private LocalDate createAt;
     private LocalDate updatedAt;
+    private TaskStatus taskStatus;
 
     public static Task createTask(int taskId, String taskDescription, LocalDate createdAt) {
         if (taskDescription == null || taskDescription.isBlank()) {
@@ -24,6 +25,7 @@ public class Task {
         this.description = taskDescription;
         this.createAt = createdAt;
         this.updatedAt = createdAt;
+        this.taskStatus = TaskStatus.TODO;
     }
 
     public int getId() {
@@ -35,7 +37,7 @@ public class Task {
     }
 
     public TaskStatus getStatus() {
-        return TaskStatus.TODO;
+        return this.taskStatus;
     }
 
     public LocalDate getCreateAt() {
@@ -47,7 +49,8 @@ public class Task {
         return updatedAt;
     }
 
-    public void update() {
+    public void moveInProgress() {
+        this.taskStatus = TaskStatus.PROGRESS;
         this.updatedAt = LocalDate.now();
     }
 }

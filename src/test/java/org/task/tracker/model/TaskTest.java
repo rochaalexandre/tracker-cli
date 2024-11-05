@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +19,6 @@ class TaskTest {
 
     @Nested
     class WhenUsingValidValues {
-
 
         @Test
         void shouldCreateNewTaskWithId() {
@@ -51,16 +51,29 @@ class TaskTest {
             Task task = Task.createTask(taskId, taskDescription, null);
             assertEquals(createdAt, task.getCreateAt());
         }
+
     }
 
     @Nested
     class WhenUpdatingTask {
+        Task task;
+        LocalDate createdAt = LocalDate.of(2024, 11, 1);
+
+        @BeforeEach
+        void setUp() {
+            task = Task.createTask(taskId, taskDescription, createdAt);
+        }
+
         @Test
         void shouldUpdateTheUpdateAtProperty() {
-            LocalDate createdAt = LocalDate.of(2024,11,1);
-            Task task = Task.createTask(taskId, taskDescription, createdAt);
-            task.update();
-            assertEquals(task.getUpdateAt(), LocalDate.now());
+            task.moveInProgress();
+            assertEquals(LocalDate.now(), task.getUpdateAt());
+        }
+
+        @Test
+        void shouldChangeTaskStatusToInProgress() {
+            task.moveInProgress();
+            assertEquals(TaskStatus.PROGRESS, task.getStatus());
         }
     }
 
