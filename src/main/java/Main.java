@@ -21,9 +21,9 @@ public class Main {
             case ADD -> addTask(args[1]);
             case UPDATE -> updateTask(args[1], args[2]);
             case DELETE -> deleteTask(args[1]);
-            case LIST -> System.out.println("Execute command " + LIST);
-            case MARK_IN_PROGRESS -> System.out.println("Execute command " + MARK_IN_PROGRESS);
-            case MARK_DONE -> System.out.println("Execute command " + MARK_DONE);
+            case LIST -> listTasks(args.length > 2 ? args[1] : null);
+            case MARK_IN_PROGRESS -> markTaskInProgress(args[1]);
+            case MARK_DONE -> markTaskAsDone(args[1]);
             default -> System.out.println("Invalid command");
         }
     }
@@ -39,6 +39,22 @@ public class Main {
 
     private static void deleteTask(String id) {
         System.out.println("Delete task: " + id);
+    }
+
+    private static void listTasks(String status) {
+        if (status == null || status.isEmpty()) {
+            System.out.println("Listing all tasks");
+        } else {
+            System.out.println("Listing tasks with status: " + status);
+        }
+    }
+
+    private static void markTaskAsDone(String id) {
+        System.out.println("Marking task " + id + " as " + STATUS_DONE);
+    }
+
+    private static void markTaskInProgress(String id) {
+        System.out.println("Marking task " + id + " as " + STATUS_IN_PROGRESS);
     }
 
     private static void printUsage() {
