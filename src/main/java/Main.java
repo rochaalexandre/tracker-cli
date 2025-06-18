@@ -21,7 +21,7 @@ public class Main {
             case ADD -> addTask(args[1]);
             case UPDATE -> updateTask(args[1], args[2]);
             case DELETE -> deleteTask(args[1]);
-            case LIST -> listTasks(args.length > 2 ? args[1] : null);
+            case LIST -> listTasks(args.length >= 2 ? args[1] : null);
             case MARK_IN_PROGRESS -> markTaskInProgress(args[1]);
             case MARK_DONE -> markTaskAsDone(args[1]);
             default -> System.out.println("Invalid command");
