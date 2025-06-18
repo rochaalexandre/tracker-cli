@@ -20,6 +20,9 @@ public class TaskService {
 
     public boolean updateTask(String id, String title) {
         Task savedTask = taskRepository.getTask(id);
+        if (savedTask == null) {
+            return false;
+        }
         Task updatedTask = Task.builder().from(savedTask).description(title).build();
         return taskRepository.updateTask(updatedTask);
     }
