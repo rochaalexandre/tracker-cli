@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import model.Task;
 
@@ -12,8 +13,11 @@ public class InMemoryTaskRepository implements TaskRepository {
     private int nextId = 1;
 
     @Override
-    public Task getTask(String id) {
-        return tasks.get(Integer.parseInt(id));
+    public Optional<Task> getTask(String id) {
+        if (tasks.containsKey(Integer.parseInt(id))) {
+            return Optional.of(tasks.get(Integer.parseInt(id)));
+        }
+        return Optional.empty();
     }
 
     @Override

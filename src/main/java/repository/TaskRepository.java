@@ -1,11 +1,12 @@
 package repository;
 
 import java.util.List;
+import java.util.Optional;
 import model.Task;
 
 public interface TaskRepository {
 
-    public Task getTask(String id);
+    public Optional<Task> getTask(String id);
 
     public Task addTask(Task task);
 

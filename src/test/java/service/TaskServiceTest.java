@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,7 @@ class TaskServiceTest {
 
         // then
         assertThat(updated).isTrue();
-        Task updatedTask = repository.getTask(String.valueOf(task.getId()));
+        Task updatedTask = repository.getTask(String.valueOf(task.getId())).get();
         assertThat(updatedTask.getDescription()).isEqualTo(newDescription);
         assertThat(updatedTask.getStatus()).isEqualTo(task.getStatus());
         assertThat(updatedTask.getId()).isEqualTo(task.getId());
@@ -120,6 +121,87 @@ class TaskServiceTest {
 
         // Then
         assertThat(result).isEmpty();
+    }
+
+    @Test
+    void shouldUpdateTaskStatusWhenTaskExists() {
+        // Given
+        Task originalTask = taskService.addTask("Test Task");
+        int taskId = originalTask.getId();
+        String newStatus = "IN_PROGRESS";
+
+        // When
+        Optional<Task> result = taskService.updateTaskStatus(String.valueOf(taskId), newStatus);
+
+        // Then
+        assertThat(result).isPresent();
+        assertThat(result.get().getStatus()).isEqualTo(newStatus);
+        assertThat(result.get().getDescription()).isEqualTo("Test Task");
+        assertThat(result.get().getId()).isEqualTo(taskId);
+    }
+
+    @Test
+    void shouldReturnEmptyWhenTaskNotFound() {
+        // Given
+        String nonExistentId = "999";
+        String newStatus = "DONE";
+
+        // When
+        Optional<Task> result = taskService.updateTaskStatus(nonExistentId, newStatus);
+
+        // Then
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    void shouldReturnEmptyWhenRepositoryUpdateFails() {
+        // Given
+        // When
+        Optional<Task> result = taskService.updateTaskStatus("2", "INVALID_STATUS");
+
+        // Then
+        assertThat(result).isNotPresent();
+    }
+
+    @Test
+    void shouldPreserveOtherFieldsWhenUpdatingStatus() {
+        // Given
+        Task originalTask = taskService.addTask("Important Task");
+        String taskId = String.valueOf(originalTask.getId());
+        String originalDescription = originalTask.getDescription();
+
+        // When
+        Optional<Task> result = taskService.updateTaskStatus(taskId, "DONE");
+
+        // Then
+        assertThat(result).isPresent();
+        assertThat(result.get().getDescription()).isEqualTo(originalDescription);
+        assertThat(result.get().getId()).isEqualTo(Integer.parseInt(taskId));
+        assertThat(result.get().getStatus()).isEqualTo("DONE");
+    }
+
+    @Test
+    void shouldReturnUpdatedTaskFromRepository() {
+        // Given
+        String status = "COMPLETED";
+        Task originalTask = taskService.addTask("Test Task");
+        Integer taskId = originalTask.getId();
+
+        // When
+        Optional<Task> result = taskService.updateTaskStatus(String.valueOf(taskId), status);
+
+        // Then
+        assertThat(result).isPresent();
+
+        // Verify it's actually the updated task from the repository
+        List<Task> allTasks = taskService.listTasks();
+        Optional<Task> taskInRepository = allTasks.stream()
+            .filter(task -> task.getId() == taskId)
+            .findFirst();
+
+        assertThat(taskInRepository).isPresent();
+        assertThat(taskInRepository.get().getStatus()).isEqualTo(status);
+        assertThat(result.get()).isEqualTo(taskInRepository.get());
     }
 
     private Task createTaskWithId(String description, String status) {

@@ -1,6 +1,7 @@
 package service;
 
 import java.util.List;
+import java.util.Optional;
 import model.Task;
 import repository.TaskRepository;
 
@@ -20,12 +21,20 @@ public class TaskService {
     }
 
     public boolean updateTask(String id, String title) {
-        Task savedTask = taskRepository.getTask(id);
-        if (savedTask == null) {
-            return false;
-        }
-        Task updatedTask = Task.builder().from(savedTask).description(title).build();
-        return taskRepository.updateTask(updatedTask);
+        return taskRepository
+            .getTask(id)
+            .map(task -> Task.builder().from(task).description(title).build())
+            .map(taskRepository::updateTask)
+            .orElse(false);
+    }
+
+    public Optional<Task> updateTaskStatus(String id, String status) {
+        return taskRepository
+            .getTask(id)
+            .map(task -> Task.builder().from(task).status(status).build())
+            .map(taskRepository::updateTask)
+            .filter(Boolean::booleanValue)
+            .flatMap(updated -> taskRepository.getTask(id));
     }
 
     public List<Task> listTaskByStatus(String status) {
