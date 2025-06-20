@@ -8,107 +8,145 @@ class MainTest {
 
     @Test
     void testAddCommand() {
-        // Captura System.out
+
+        //Given
         ByteArrayOutputStream output = setupOutputStream();
 
-        // Executa
+        //When
         Main.main(new String[] {"add", "Buy groceries"});
 
-        // Verifica
+        //Then
         assertThat(output.toString()).contains("New task title: Buy groceries");
     }
 
     @Test
     void testUpdateCommand() {
+
+        //Given
         ByteArrayOutputStream output = setupOutputStream();
 
+        //When
         Main.main(new String[] {"update", "1", "Updated description"});
 
-        assertThat(output.toString())
-            .contains("Task ID: 1")
+        //Then
+        assertThat(output.toString()).contains("Task ID: 1")
             .contains("New task title: Updated description");
     }
 
     @Test
     void testDeleteCommand() {
+
+        //Given
         ByteArrayOutputStream output = setupOutputStream();
 
+        //When
         Main.main(new String[] {"delete", "1"});
 
+        //Then
         assertThat(output.toString()).contains("Delete task: 1");
     }
 
     @Test
     void testListAllTasks() {
+
+        //Given
         ByteArrayOutputStream output = setupOutputStream();
 
+        //When
         Main.main(new String[] {"list"});
 
+        //Then
         assertThat(output.toString()).contains("Listing all tasks");
     }
 
     @Test
     void testListTasksWithStatusTodo() {
+
+        //Given
         ByteArrayOutputStream output = setupOutputStream();
 
+        //When
         Main.main(new String[] {"list", "todo"});
 
+        //Then
         assertThat(output.toString()).contains("Listing tasks with status: todo");
     }
 
     @Test
     void testListTasksWithStatusInProgress() {
+
+        //Given
         ByteArrayOutputStream output = setupOutputStream();
 
+        //When
         Main.main(new String[] {"list", "in-progress"});
 
+        //Then
         assertThat(output.toString()).contains("Listing tasks with status: in-progress");
     }
 
     @Test
     void testListTasksWithStatusDone() {
+
+        //Given
         ByteArrayOutputStream output = setupOutputStream();
 
+        //When
         Main.main(new String[] {"list", "done"});
 
+        //Then
         assertThat(output.toString()).contains("Listing tasks with status: done");
     }
 
     @Test
     void testMarkTaskInProgress() {
+
+        //Given
         ByteArrayOutputStream output = setupOutputStream();
 
+        //When
         Main.main(new String[] {"mark-in-progress", "1"});
 
-        assertThat(output.toString())
-            .contains("Marking task 1 as in-progress");
+        //Then
+        assertThat(output.toString()).contains("Marking task 1 as in-progress");
     }
 
     @Test
     void testMarkTaskAsDone() {
+
+        //Given
         ByteArrayOutputStream output = setupOutputStream();
 
+        //When
         Main.main(new String[] {"mark-done", "1"});
 
-        assertThat(output.toString())
-            .contains("Marking task 1 as done");
+        //Then
+        assertThat(output.toString()).contains("Marking task 1 as done");
     }
 
     @Test
     void testInvalidCommand() {
+
+        //Given
         ByteArrayOutputStream output = setupOutputStream();
 
+        //When
         Main.main(new String[] {"invalid-command"});
 
+        //Then
         assertThat(output.toString()).contains("Invalid command");
     }
 
     @Test
     void testNoArguments() {
+
+        //Given
         ByteArrayOutputStream output = setupOutputStream();
 
+        //When
         Main.main(new String[] {});
 
+        //Then
         assertThat(output.toString()).contains("Task Tracker CLI");
     }
 

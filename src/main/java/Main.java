@@ -1,3 +1,5 @@
+import service.TaskService;
+
 public class Main {
     public static final String ADD = "add";
     public static final String UPDATE = "update";
@@ -9,6 +11,8 @@ public class Main {
     public static final String STATUS_TODO = "todo";
     public static final String STATUS_IN_PROGRESS = "in-progress";
     public static final String STATUS_DONE = "done";
+
+    private final TaskService taskService = new TaskService(null);
 
     public static void main(String[] args) {
 
