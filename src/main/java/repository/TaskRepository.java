@@ -9,9 +9,9 @@ public interface TaskRepository {
 
     public Task addTask(Task task);
 
-    public boolean deleteTask(Task task);
-
     public boolean updateTask(Task task);
 
-    public List<Task> listTask(String status);
+    public List<Task> listTaskByStatus(String status);
+
+    public List<Task> listTask();
 }

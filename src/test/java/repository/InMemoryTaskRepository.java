@@ -1,5 +1,6 @@
 package repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +24,6 @@ public class InMemoryTaskRepository implements TaskRepository {
     }
 
     @Override
-    public boolean deleteTask(Task task) {
-        return tasks.remove(task.getId()) != null;
-    }
-
-    @Override
     public boolean updateTask(Task task) {
         if (!tasks.containsKey(task.getId())) {
             return false;
@@ -37,9 +33,14 @@ public class InMemoryTaskRepository implements TaskRepository {
     }
 
     @Override
-    public List<Task> listTask(String status) {
+    public List<Task> listTaskByStatus(String status) {
         return tasks.values().stream()
             .filter(task -> status == null || task.getStatus().equals(status))
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Task> listTask() {
+        return new ArrayList<>(tasks.values());
     }
 }

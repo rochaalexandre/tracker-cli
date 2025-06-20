@@ -1,5 +1,6 @@
 package service;
 
+import java.util.List;
 import model.Task;
 import repository.TaskRepository;
 
@@ -27,5 +28,12 @@ public class TaskService {
         return taskRepository.updateTask(updatedTask);
     }
 
+    public List<Task> listTaskByStatus(String status) {
+        return taskRepository.listTaskByStatus(status);
+    }
+
+    public List<Task> listTasks() {
+        return taskRepository.listTask();
+    }
 
 }

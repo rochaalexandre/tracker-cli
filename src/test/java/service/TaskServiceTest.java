@@ -2,6 +2,8 @@ package service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
+import java.util.List;
 import model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,5 +63,69 @@ class TaskServiceTest {
         assertThat(updated).isFalse();
     }
 
-    // Additional test methods can be added here for other TaskService functionality
+    @Test
+    void shouldReturnAllTasksWhenListingTasks() {
+        // Given
+        List<Task> expectedTasks = Arrays.asList(
+            createTaskWithId("Task 1", "TODO"),
+            createTaskWithId("Task 2", "DONE")
+        );
+        expectedTasks.forEach(repository::addTask);
+
+        // When
+        List<Task> result = taskService.listTasks();
+
+        // Then
+        assertThat(result).isEqualTo(expectedTasks);
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenNoTasksExist() {
+        // When
+        List<Task> result = taskService.listTasks();
+
+        // Then
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    void shouldReturnTasksWithSpecificStatusWhenListingByStatus() {
+        // Given
+        String status = "TODO";
+        List<Task> expectedTasks = Arrays.asList(
+            createTaskWithId("Task 1", "TODO"),
+            createTaskWithId("Task 3", "TODO")
+        );
+        expectedTasks.forEach(repository::addTask);
+
+        // When
+        List<Task> result = taskService.listTaskByStatus(status);
+
+        // Then
+        assertThat(result).isEqualTo(expectedTasks);
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenNoTasksMatchStatus() {
+        // Given
+        String status = "IN_PROGRESS";
+        List<Task> expectedTasks = Arrays.asList(
+            createTaskWithId("Task 1", "TODO"),
+            createTaskWithId("Task 3", "TODO")
+        );
+        expectedTasks.forEach(repository::addTask);
+
+        // When
+        List<Task> result = taskService.listTaskByStatus(status);
+
+        // Then
+        assertThat(result).isEmpty();
+    }
+
+    private Task createTaskWithId(String description, String status) {
+        return Task.builder()
+            .description(description)
+            .status(status)
+            .build();
+    }
 }
