@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Task {
     private int id;
@@ -8,11 +9,11 @@ public class Task {
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    // DateTimeFormatter for serializing/deserializing dates
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
-    public Task() {
-    }
 
-    public Task(int id, String description, String status, LocalDateTime createdAt,
+    public Task(Integer id, String description, String status, LocalDateTime createdAt,
                 LocalDateTime updatedAt) {
         this.id = id;
         this.description = description;
@@ -120,5 +121,28 @@ public class Task {
         public Task build() {
             return new Task(id, description, status, createdAt, updatedAt);
         }
+    }
+
+    public String toJson() {
+        return "{\"id\":\"" + id + "\", \"description\":\"" + description.strip() +
+               "\", \"status\":\"" + status +
+               "\", \"createdAt\":\"" + createdAt.format(formatter) + "\", \"updatedAt\":\"" +
+               updatedAt.format(formatter) + "\"}";
+    }
+
+    public static Task fromJson(String json) {
+        String sanitizedContent = json.replaceAll("[{}]", "").replace("\"", "");
+        System.out.println(" JSON content: " + sanitizedContent);
+        String[] parts = sanitizedContent.split(",");
+
+        int parsedId = Integer.parseInt(parts[0].split(":")[1].strip());
+
+        return Task.builder()
+            .id(parsedId)
+            .description(parts[1].split(":")[1].strip())
+            .status(parts[2].split(":")[1].strip())
+            .createdAt(LocalDateTime.parse(parts[3].split("[a-z]:")[1].strip(), formatter))
+            .updatedAt(LocalDateTime.parse(parts[4].split("[a-z]:")[1].strip(), formatter))
+            .build();
     }
 }
