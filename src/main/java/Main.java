@@ -1,3 +1,4 @@
+import repository.TaskRepositoryImpl;
 import service.TaskService;
 
 public class Main {
@@ -12,7 +13,7 @@ public class Main {
     public static final String STATUS_IN_PROGRESS = "in-progress";
     public static final String STATUS_DONE = "done";
 
-    private final TaskService taskService = new TaskService(null);
+    private static final TaskService taskService = new TaskService(new TaskRepositoryImpl());
 
     public static void main(String[] args) {
 
@@ -32,13 +33,15 @@ public class Main {
         }
     }
 
-    private static void addTask(String title) {
-        System.out.println("New task title: " + title);
+    private static void addTask(String description) {
+        taskService.addTask(description);
+        System.out.println("New task description: " + description);
     }
 
-    private static void updateTask(String id, String title) {
+    private static void updateTask(String id, String description) {
+        taskService.updateTask(id, description);
         System.out.println("Task ID: " + id);
-        System.out.println("New task title: " + title);
+        System.out.println("New task description: " + description);
     }
 
     private static void deleteTask(String id) {
@@ -48,16 +51,20 @@ public class Main {
     private static void listTasks(String status) {
         if (status == null || status.isEmpty()) {
             System.out.println("Listing all tasks");
+            taskService.listTasks().forEach(System.out::println);
         } else {
             System.out.println("Listing tasks with status: " + status);
+            taskService.listTasks().forEach(System.out::println);
         }
     }
 
     private static void markTaskAsDone(String id) {
+        taskService.updateTaskStatus(id, STATUS_DONE);
         System.out.println("Marking task " + id + " as " + STATUS_DONE);
     }
 
     private static void markTaskInProgress(String id) {
+        taskService.updateTaskStatus(id, STATUS_IN_PROGRESS);
         System.out.println("Marking task " + id + " as " + STATUS_IN_PROGRESS);
     }
 
