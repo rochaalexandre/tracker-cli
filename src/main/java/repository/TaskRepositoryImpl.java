@@ -30,6 +30,8 @@ public class TaskRepositoryImpl implements TaskRepository {
             List<String> lines = Files.readAllLines(FILE_PATH);
             return lines.stream()
                 .filter(Predicate.not(line -> List.of("[", "]").contains(line)))
+                .filter(Predicate.not("[]"::equals))
+                .filter(Predicate.not(String::isEmpty))
                 .map(Task::fromJson)
                 .collect(Collectors.toList());
         } catch (IOException e) {
@@ -59,17 +61,22 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
     public boolean updateTask(Task task) {
+        List<Integer> taskIds = tasks.stream().map(Task::getId).toList();
+        if (taskIds.contains(task.getId())) {
+            tasks.removeIf(t -> t.getId() == task.getId());
+            return tasks.add(task);
+        }
         return false;
     }
 
     @Override
     public List<Task> listTaskByStatus(String status) {
-        return List.of();
+        return tasks.stream().filter(t -> t.getStatus().equals(status)).toList();
     }
 
     @Override
     public List<Task> listTask() {
-        return List.of();
+        return tasks;
     }
 
     public void saveFileContent() {
