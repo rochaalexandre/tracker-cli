@@ -17,7 +17,15 @@
 
         <junit.version>5.10.0</junit.version>
         <assertj.version>3.24.2</assertj.version>
-        <pitest.version>1.15.3</pitest.version>
+        <pitest.version>1.19.4</pitest.version>
+        <pitest.junit5.version>1.2.1</pitest.junit5.version>
+        <!-- PIT -->
+        <pit.conf.timeoutConstant>15000</pit.conf.timeoutConstant>
+        <pit.conf.targetClasses>com.tasktracker.*</pit.conf.targetClasses>
+        <pit.conf.targetTests>com.tasktracker.*</pit.conf.targetTests>
+        <!-- INFO: Try to refactory code in order to fix TIME_OUT MINIONS instead of increasing this -->
+        <pit.conf.withHistory>false</pit.conf.withHistory>
+        <pit.conf.siteReportName>mutation-tests-report</pit.conf.siteReportName>
     </properties>
 
     <dependencies>
@@ -63,21 +71,17 @@
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>${pitest.version}</version>
+                <configuration>
+                    <timeoutConstant>${pit.conf.timeoutConstant}</timeoutConstant>
+                    <withHistory>${pit.conf.withHistory}</withHistory>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
                         <artifactId>pitest-junit5-plugin</artifactId>
-                        <version>1.2.0</version>
+                        <version>1.2.1</version>
                     </dependency>
                 </dependencies>
-                <configuration>
-                    <targetClasses>
-                        <param>com.tasktracker.*</param>
-                    </targetClasses>
-                    <targetTests>
-                        <param>com.tasktracker.*</param>
-                    </targetTests>
-                </configuration>
             </plugin>
 
             <!-- Exec Plugin to run main class -->

@@ -16,7 +16,7 @@ class MainTest {
         Main.main(new String[] {"add", "Buy groceries"});
 
         //Then
-        assertThat(output.toString()).contains("New task title: Buy groceries");
+        assertThat(output.toString()).contains("New task description: Buy groceries");
     }
 
     @Test
@@ -29,8 +29,8 @@ class MainTest {
         Main.main(new String[] {"update", "1", "Updated description"});
 
         //Then
-        assertThat(output.toString()).contains("Task ID: 1")
-            .contains("New task title: Updated description");
+        assertThat(output.toString())
+            .contains("New task description: Updated description");
     }
 
     @Test

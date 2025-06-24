@@ -19,8 +19,12 @@ public class TaskRepositoryImpl implements TaskRepository {
     private int nextId;
 
 
+    public TaskRepositoryImpl() {
+        this("tasks.json");
+    }
+
     public TaskRepositoryImpl(String fileName) {
-        FILE_PATH = Paths.get(fileName == null || fileName.isEmpty() ? "tasks.json" : fileName);
+        FILE_PATH = Paths.get(fileName);
         this.tasks = loadFileContent();
         this.nextId = loadMaxIdFromFile() + 1;
     }
@@ -29,7 +33,8 @@ public class TaskRepositoryImpl implements TaskRepository {
         try {
             List<String> lines = Files.readAllLines(FILE_PATH);
             return lines.stream()
-                .filter(Predicate.not(line -> List.of("[", "]").contains(line)))
+                .map(String::strip)
+                .filter(Predicate.not(line -> List.of("[", "]","{","}").contains(line)))
                 .filter(Predicate.not("[]"::equals))
                 .filter(Predicate.not(String::isEmpty))
                 .map(Task::fromJson)
